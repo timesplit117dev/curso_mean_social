@@ -1,0 +1,76 @@
+<h1>Hola, {{identity.name}}</h1>
+<hr>
+
+<p-toast></p-toast>
+
+<div class="custom-background">
+
+  <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
+
+    <p-avatar *ngIf="identity.image" [image]="url + 'userGetImage/' + identity.image" styleClass="mr-2" size="xlarge"
+      shape="circle"></p-avatar>
+    <p-avatar *ngIf="!identity.image" image="assets/no_user.png" styleClass="mr-2" size="xlarge"
+      shape="circle"></p-avatar>
+
+    <div
+      class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+      <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+        <div class="text-2xl font-bold text-900">{{ identity.name }} {{identity.surname}}</div>
+        <div class="flex align-items-center gap-3">
+          <span class="flex align-items-center gap-2">
+            <span class="font-semibold">{{ identity.nick }}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <hr>
+
+  <div class="grid text-center">
+    <div class="col stats-col">
+      <p class="stats-header">Siguiendo</p>
+      <p class="stats-value">{{stats.following}}</p>
+    </div>
+    <div class="col stats-col">
+      <p class="stats-header">Seguidores</p>
+      <p class="stats-value">{{stats.followed}}</p>
+    </div>
+    <div class="col stats-col">
+      <p class="stats-header">Publicaciones</p>
+      <p class="stats-value">{{stats.publications}}</p>
+    </div>
+  </div>
+  <hr>
+
+  <div class="card">
+    <h3 class="pl-4">Publicar</h3>
+    <hr>
+
+    <form #newPubForm="ngForm" class="pl-4">
+
+      <div class="field mt-5">
+        <span class="p-float-label">
+          <textarea name="text" id="text" #text="ngModel" rows="5" cols="30" pInputTextarea
+            [(ngModel)]="publication.text" required></textarea>
+          <label for="text">¿Qué estás pensando hoy?</label>
+          <p *ngIf="!text.valid && text.touched" class="text-red-500 ml-2">Escriba algo!</p>
+        </span>
+      </div>
+
+      <div class="field">
+        <span class="p-float-label mt-3">
+          <p-fileUpload mode="basic" [files]="files" [customUpload]=true (uploadHandler)="fileChangeEvent($event)"
+            chooseLabel="Subir imagen" [auto]="true"></p-fileUpload>
+          <p *ngIf="filesToUpload.length">{{filesToUpload[0].name}}</p>
+        </span>
+      </div>
+
+      <p-button label="Actualizar datos" styleClass="p-button-success mb-4" (onClick)="onSubmit(newPubForm)"
+        [disabled]="!newPubForm.valid"></p-button>
+
+    </form>
+
+  </div>
+
+</div>

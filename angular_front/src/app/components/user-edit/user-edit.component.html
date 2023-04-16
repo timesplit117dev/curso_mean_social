@@ -1,0 +1,73 @@
+<div class="card col-6 col-offset-3 custom-background border-round-2xl p-4 mt-4">
+
+
+
+  <form #userEditForm="ngForm">
+    <p-toast></p-toast>
+    <h2>EDITAR PERFIL</h2>
+    <hr class="mb-5">
+
+    <div class="field mb-4">
+      <span class="p-float-label">
+        <input pInputText name="name" id="name" #name="ngModel" [(ngModel)]="user.name" required />
+        <label htmlFor="name">Nombre</label>
+        <span *ngIf="!name.valid && name.touched" class="text-red-500 ml-2">El nombre es obligatorio!</span>
+      </span>
+    </div>
+
+    <div class="field mb-4">
+      <span class="p-float-label">
+        <input pInputText name="surname" id="surname" #surname="ngModel" [(ngModel)]="user.surname" required />
+        <label htmlFor="surname">Apellidos</label>
+        <span *ngIf="!surname.valid && surname.touched" class="text-red-500 ml-2">Los apellidos son obligatorios!</span>
+      </span>
+    </div>
+
+    <div class="field mb-4">
+      <span class="p-float-label">
+        <input pInputText name="nick" id="nick" #nick="ngModel" [(ngModel)]="user.nick" required />
+        <label htmlFor="nick">Apodo</label>
+        <span *ngIf="!nick.valid && nick.touched" class="text-red-500 ml-2">El apodo es obligatorio!</span>
+      </span>
+    </div>
+
+    <div class="field mb-4">
+      <span class="p-float-label">
+        <input pInputText name="email" id="email" #email="ngModel" [(ngModel)]="user.email" required
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
+        <label htmlFor="email">Email</label>
+        <span *ngIf="!email.valid && email.touched" class="text-red-500 ml-2">Formato incorrecto!</span>
+      </span>
+    </div>
+
+    <div class="field">
+      <span class="p-float-label">
+        <p-password name="password" [(ngModel)]="user.password" #password="ngModel" [feedback]="false"
+          [disabled]="true"></p-password>
+        <label for="password">Contraseña</label>
+      </span>
+    </div>
+
+    <div class="field">
+
+      <span class="p-float-label">
+        <p>Imagen avatar</p>
+      </span>
+      <div class="card flex">
+        <p-image *ngIf="user.image" src="{{ url + 'userGetImage/' + user.image }}" alt="Image" width="250"></p-image>
+        <p-image *ngIf="!user.image" src="assets/no_user.png" alt="Image" width="250"></p-image>
+      </div>
+
+      <span class="p-float-label mt-3">
+        <p-fileUpload mode="basic" [files]="files" [customUpload]=true
+          (uploadHandler)="fileChangeEvent($event)" chooseLabel="Subir imagen" [auto]="true"></p-fileUpload>
+          <p *ngIf="filesToUpload.length">{{filesToUpload[0].name}}</p>
+      </span>
+
+    </div>
+
+    <p-button label="Actualizar datos" styleClass="p-button-success" (onClick)="onSubmit()"
+      [disabled]="!userEditForm.valid"></p-button>
+
+  </form>
+</div>

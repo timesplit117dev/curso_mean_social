@@ -1,0 +1,48 @@
+<div class="grid">
+  <p-toast></p-toast>
+  <div class="col-8">
+    <h1>Lista mensajes</h1>
+    <hr>
+
+    <div *ngIf="messages != ''" class="mensajes custom-background">
+      <div *ngFor="let message of messages">
+
+        <p>{{message.emitter.name}} <span style="color:rgb(0, 174, 255);"
+            *ngIf="identity._id != message.emitter._id">{{message.emitter._id}}</span> : {{message.text}}</p>
+        <hr>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-4">
+    <h1>Crear mensaje</h1>
+    <hr>
+
+    <form #messageForm="ngForm" class="mt-5">
+
+      <div class="field mb-4">
+        <span class="p-float-label">
+          <input pInputText name="receiver" id="receiver" #receiver="ngModel" [(ngModel)]="message.receiver" required />
+          <label htmlFor="receiver">Receiver</label>
+          <span *ngIf="!receiver.valid && receiver.touched" class="text-red-500 ml-2">Pon un receiver!</span>
+        </span>
+      </div>
+
+      <div class="field mt-5">
+        <span class="p-float-label">
+          <textarea name="text" id="text" #text="ngModel" rows="5" cols="30" pInputTextarea [(ngModel)]="message.text"
+            required></textarea>
+          <label for="text">Mensaje</label>
+          <p *ngIf="!text.valid && text.touched" class="text-red-500 ml-2">Escriba algo!</p>
+        </span>
+      </div>
+
+      <p-button label="Actualizar datos" styleClass="p-button-success mb-4" (onClick)="sendMessage()"
+        [disabled]="!messageForm.valid"></p-button>
+
+    </form>
+
+  </div>
+
+</div>

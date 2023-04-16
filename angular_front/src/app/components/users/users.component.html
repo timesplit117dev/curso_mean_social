@@ -1,0 +1,59 @@
+<div class="grid mt-2">
+  <div class="col-8">
+
+    <p-toast></p-toast>
+
+    <h1 class="ml-2">Gente</h1>
+    <hr>
+    <p-dataView #dv [value]="users" [rows]="2" [totalRecords]="total" [paginator]="true" [lazy]="true"
+      (onLazyLoad)="paginatorUsers($event)">
+      <ng-template let-user pTemplate="listItem">
+        <div class="col-12">
+          <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
+
+            <p-avatar *ngIf="user.image" [image]="url + 'userGetImage/' + user.image" styleClass="mr-2" size="xlarge"
+              shape="circle"></p-avatar>
+            <p-avatar *ngIf="!user.image" image="assets/no_user.png" styleClass="mr-2" size="xlarge"
+              shape="circle"></p-avatar>
+
+            <div
+              class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+              <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                <a class="user-profile-link" [routerLink]="['/perfil', user._id]"><div class="text-2xl font-bold">{{ user.name }} {{user.surname}}</div></a>
+                <div class="flex align-items-center gap-3">
+                  <span class="flex align-items-center gap-2">
+                    <span class="font-semibold">{{ user.nick }}</span>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Botones de seguimiento, solo se muestran para usuarios que no seamos nosotros -->
+              <div *ngIf="user._id != identity._id"
+                class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
+
+                <!-- Botón de seguir, solo se muestra si el usuario no se encuentra entre la gente que seguimos -->
+                <button pButton *ngIf="follows.indexOf(user._id) < 0" icon="pi pi-plus-circle"
+                  class="md:align-self-end mb-2 p-button-rounded p-button-success"
+                  (click)="followUser(user._id)"></button>
+
+                <span *ngIf="follows.indexOf(user._id) >= 0" (mouseenter)="mouseEnter(user._id)"
+                  (mouseleave)="mouseLeave()">
+
+                  <button *ngIf="followUserOver == user._id" pButton icon="pi pi-minus-circle"
+                    class="md:align-self-end mb-2 p-button-rounded p-button-danger"
+                    (click)="unfollowUser(user._id)"></button>
+                  <button *ngIf="followUserOver != user._id" pButton icon="pi pi-check-circle"
+                    class="md:align-self-end mb-2 p-button-rounded"></button>
+
+                </span>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </ng-template>
+    </p-dataView>
+  </div>
+  <app-sidebar class="col-4"></app-sidebar>
+</div>

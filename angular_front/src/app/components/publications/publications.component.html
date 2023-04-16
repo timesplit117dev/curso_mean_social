@@ -1,0 +1,44 @@
+<div class="card">
+  <p-toast></p-toast>
+
+  <div>
+    <p-button icon="pi pi-refresh" (click)="page=1; getPublications(1)" label="Refrescar" styleClass="mb-2"></p-button>
+  </div>
+
+  <p-dataView #dv [value]="publications">
+    <ng-template let-publication pTemplate="listItem">
+      <div class="col-12">
+
+        <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
+
+          <p-avatar *ngIf="publication.user.image" [image]="url + 'userGetImage/' + publication.user.image"
+            styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
+          <p-avatar *ngIf="!publication.user.image" image="assets/no_user.png" styleClass="mr-2" size="xlarge"
+            shape="circle"></p-avatar>
+
+          <div
+            class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+            <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+              <div class="text-2xl font-bold text-900">{{ publication.user.name }} {{ publication.user.surname }}
+              </div>
+              <div class="flex align-items-center gap-3">
+                <span class="flex align-items-center gap-2">
+                  <span class="font-semibold">{{ publication.user.nick }}</span>
+                </span>
+              </div>
+              <p>{{(publication.created_at|amFromUnix) | amLocale: 'es' | amTimeAgo}}</p>
+            </div>
+
+            <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2 publication-text">
+              {{publication.text}}
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </ng-template>
+  </p-dataView>
+</div>
+
+<button class="mt-3" pButton pRipple label="Más puto" (click)="viewMore()" *ngIf="!noMore"></button>

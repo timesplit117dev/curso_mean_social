@@ -1,0 +1,30 @@
+<div class="card">
+  <p-menubar [model]="nav">
+
+    <ng-template pTemplate="start">
+      <span class="font-bold text-3xl">NGSOCIAL</span>
+    </ng-template>
+
+    <ng-template pTemplate="end">
+      <div class="card">
+        <div class="flex justify-content-end flex-wrap card-container green-container">
+
+          <div class="card" *ngIf="identity">
+            <p-avatar *ngIf="identity.image" [image]="url + 'userGetImage/' + identity.image" styleClass="mr-2"
+              size="xlarge" shape="circle"></p-avatar>
+            <p-avatar *ngIf="!identity.image" image="assets/no_user.png" styleClass="mr-2" size="xlarge"
+              shape="circle"></p-avatar>
+          </div>
+
+          <div class="card flex justify-content-end flex-wrap" *ngIf="identity">
+            <p-menu #menu [model]="profile" [popup]="true"></p-menu>
+            <button pButton class="p-button-text" type="button" (click)="menu.toggle($event)" icon="pi pi-angle-down"
+              [label]="identity.name"></button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+  </p-menubar>
+</div>
+<router-outlet></router-outlet>

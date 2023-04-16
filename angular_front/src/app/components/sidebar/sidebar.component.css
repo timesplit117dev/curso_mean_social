@@ -1,0 +1,14 @@
+.stats-header{
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.stats-value{
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.stats-col:hover{
+  color: #99e0ff;
+  cursor: pointer;
+}

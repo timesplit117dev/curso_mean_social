@@ -1,0 +1,64 @@
+<div class="card col-6 col-offset-3 custom-background border-round-2xl p-4 mt-4">
+
+  <p-toast key="confirm" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+      <div class="flex flex-column" style="flex: 1">
+        <h4>{{message.summary}}</h4>
+        <a *ngIf="status == 'success'" [routerLink]="['/login']" class="sign-in">Identificate</a>
+        <p *ngIf="status == 'error'">{{message.detail}}</p>
+      </div>
+    </ng-template>
+  </p-toast>
+
+  <form #registerForm="ngForm">
+
+    <h2>REGISTER</h2>
+    <hr class="mb-5">
+
+    <div class="field mb-4">
+      <span class="p-float-label">
+        <input pInputText name="name" id="name" #name="ngModel" [(ngModel)]="user.name" required />
+        <label htmlFor="name">Nombre</label>
+        <span *ngIf="!name.valid && name.touched" class="text-red-500 ml-2">El nombre es obligatorio!</span>
+      </span>
+    </div>
+
+    <div class="field mb-4">
+      <span class="p-float-label">
+        <input pInputText name="surname" id="surname" #surname="ngModel" [(ngModel)]="user.surname" required />
+        <label htmlFor="surname">Apellidos</label>
+        <span *ngIf="!surname.valid && surname.touched" class="text-red-500 ml-2">Los apellidos son obligatorios!</span>
+      </span>
+    </div>
+
+    <div class="field mb-4">
+      <span class="p-float-label">
+        <input pInputText name="nick" id="nick" #nick="ngModel" [(ngModel)]="user.nick" required />
+        <label htmlFor="nick">Apodo</label>
+        <span *ngIf="!nick.valid && nick.touched" class="text-red-500 ml-2">El apodo es obligatorio!</span>
+      </span>
+    </div>
+
+    <div class="field mb-4">
+      <span class="p-float-label">
+        <input pInputText name="email" id="email" #email="ngModel" [(ngModel)]="user.email" required
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
+        <label htmlFor="email">Email</label>
+        <span *ngIf="!email.valid && email.touched" class="text-red-500 ml-2">Formato incorrecto!</span>
+      </span>
+    </div>
+
+    <div class="field">
+      <span class="p-float-label">
+        <p-password name="password" [(ngModel)]="user.password" #password="ngModel" [feedback]="true"
+          required></p-password>
+        <label for="password">Contraseña</label>
+        <span *ngIf="!password.valid && password.touched" class="text-red-500 ml-2">La contraseña es obligatoria!</span>
+      </span>
+    </div>
+
+    <p-button label="Registrar" styleClass="p-button-success" (onClick)="onSubmit(registerForm)"
+      [disabled]="!registerForm.valid"></p-button>
+
+  </form>
+</div>
